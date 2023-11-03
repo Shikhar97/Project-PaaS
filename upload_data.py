@@ -14,7 +14,7 @@ with open("student_data.json") as fp:
 for user in users:
     print(user)
     response = client.put_item(
-        TableName='user_database',
+        TableName='student_table',
         Item={
             "id": {"N": str(user["id"])},
             "name": {"S": user["name"]},
