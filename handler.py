@@ -9,8 +9,7 @@ import shutil
 from decimal import *
 import pandas as pd
 
-INPUT_BUCKET = "inputbucket01"
-OUTPUT_BUCKET = "classificationresultsnucket"
+OUTPUT_BUCKET = "classification-result-bucket"
 ENCODING_FILE_KEY = "encoding"
 TABLE = "student_table"
 print('Loading function')
@@ -137,7 +136,7 @@ def face_recognition_handler(event, context):
     output_file_path = create_csv_file(student_info, file_name)
 
     try:
-        response = upload_to_s3(output_file_path, file_name)
+        upload_to_s3(output_file_path, file_name)
     except Exception as e:
         print('Could not push CSV file to s3 ', e)
 
