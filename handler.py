@@ -30,6 +30,7 @@ def get_info_from_dynamo(query):  # takes a query parameter
 
 # Function to form a CSV file and upload it to s3 output bucket
 def create_csv_file(student_info, file_name):
+    print("Info:")
     print(student_info)
     try:
         student_data = {key: [value] for key, value in student_info.items() if
@@ -50,7 +51,6 @@ def strip_file_name(filename):
 
 # Function to upload the csv file generated above to s3
 def upload_to_s3(upload_path, key):
-    key = key + '.csv'
     s3_client.upload_file(upload_path, '{}'.format(OUTPUT_BUCKET), key)
 
 
@@ -80,7 +80,7 @@ def recognize_face(frame, encodings):
         result = face_recognition.compare_faces([encoding], encoding_from_frame)
         if result[0]:
             name = encodings['name'][idx]
-            print(f"Student name identified from the frame for {name}")
+            print(f"Name identified from the frame for {name}")
             return name
     return None
 
@@ -117,7 +117,7 @@ def face_recognition_handler(event, context):
     student_info = get_info_from_dynamo(subject_name)
 
     video_name = strip_file_name(video_name)
-    output_file_name = "/tmp/{}.csv".format(video_name)
+    output_file_name = "/tmp/{}".format(video_name)
     create_csv_file(student_info, output_file_name)
     upload_to_s3(output_file_name, video_name)
     print(f"Student information of {student_info['name']} stored in output bucket for {video_name}")
