@@ -30,6 +30,7 @@ def get_info_from_dynamo(query):  # takes a query parameter
 
 # Function to form a CSV file and upload it to s3 output bucket
 def create_csv_file(student_info, file_name):
+    print(student_info)
     try:
         student_data = {key: [value] for key, value in student_info.items() if
                         key in ['name', 'major', 'year']}
