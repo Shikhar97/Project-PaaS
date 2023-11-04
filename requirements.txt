@@ -4,4 +4,4 @@ numpy
 face_recognition
 opencv-python
 ffmpeg
-pandas==2.1.2
+pandas
